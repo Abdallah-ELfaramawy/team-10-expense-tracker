@@ -1,7 +1,11 @@
 package com.example.expensetracker
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -43,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -71,7 +76,6 @@ fun HomeScreen(vm: ExpenseViewModel = viewModel()) {
     val byCategory by vm.byCategory.collectAsStateWithLifecycle()
     val monthTotal by vm.thisMonthTotal.collectAsStateWithLifecycle()
     val monthCategories by vm.thisMonthByCategory.collectAsStateWithLifecycle()
-    val monthExpenses by vm.thisMonthExpenses.collectAsStateWithLifecycle()
     val monthlyBudget by vm.monthlyBudget.collectAsStateWithLifecycle()
     val currency by vm.currency.collectAsStateWithLifecycle()
 
@@ -183,10 +187,9 @@ private fun BudgetCard(spent: Double, budget: Double, currency: String, onEdit: 
             }
             if (budget > 0) {
                 Text("${formatMoney(spent, currency)} of ${formatMoney(budget, currency)}")
-                LinearProgressIndicator(
-                    progress = { (spent / budget).toFloat().coerceIn(0f, 1f) },
-                    modifier = Modifier.fillMaxWidth(),
-                    color = if (spent > budget) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+                XmlBudgetMeter(
+                    progressPercent = ((spent / budget) * 100).toInt().coerceIn(0, 100),
+                    overBudget = spent > budget
                 )
                 Text(
                     if (spent > budget) "You are over budget by ${formatMoney(spent - budget, currency)}"
@@ -198,6 +201,26 @@ private fun BudgetCard(spent: Double, budget: Double, currency: String, onEdit: 
             }
         }
     }
+}
+
+/** Inflates a small legacy XML view inside the Compose budget card. */
+@Composable
+private fun XmlBudgetMeter(progressPercent: Int, overBudget: Boolean) {
+    AndroidView(
+        modifier = Modifier.fillMaxWidth(),
+        factory = { context ->
+            LayoutInflater.from(context).inflate(R.layout.view_budget_meter, null, false)
+        },
+        update = { view ->
+            view.findViewById<ProgressBar>(R.id.budget_meter_progress).apply {
+                progress = progressPercent
+                progressTintList = ColorStateList.valueOf(
+                    Color.parseColor(if (overBudget) "#B3261E" else "#147D64")
+                )
+                contentDescription = "$progressPercent% of monthly budget used"
+            }
+        }
+    )
 }
 
 @Composable
