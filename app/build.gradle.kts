@@ -27,6 +27,14 @@ android {
     buildFeatures { compose = true }
 }
 
+// Give the APK a recognizable filename when it is shared outside the app.
+android.applicationVariants.all {
+    outputs.all {
+        val apkOutput = this as com.android.build.gradle.api.ApkVariantOutput
+        apkOutput.outputFileName = "ExpenseTracker-${buildType.name}.apk"
+    }
+}
+
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2024.09.00")
     implementation(composeBom)
