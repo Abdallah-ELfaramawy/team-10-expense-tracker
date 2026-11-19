@@ -45,6 +45,7 @@ On first build, Gradle may download the Gradle distribution and Android dependen
 - **Intents:** An explicit intent opens the details screen. Implicit intents share text and open a map search for ATMs.
 
 See [the detailed project documentation](docs/PROJECT_DOCUMENTATION.md) for the package map, data flow, and implementation notes.
+The expanded PDF edition is available at `output/pdf/expense-tracker-documentation-v2.pdf`.
 
 ## Course rubric references
 
