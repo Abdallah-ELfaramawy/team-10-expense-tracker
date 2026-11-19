@@ -206,8 +206,8 @@ The first build can download the Gradle distribution and Android dependencies. S
 | UI/UX | Expense list, details, input validation, category chips, monthly budget and chart |
 | Code quality | Kotlin data class, immutable `val` fields, extension helpers, lambdas, StateFlow |
 | Persistence | Room upsert/delete and observable queries; DataStore preferences |
-| ACM abstract | `docs/abstract.tex` and `docs/abstract.pdf`; replace author placeholders |
+| ACM abstract | The course requires a two-page ACM abstract; add its source and PDF under `docs/` before submission. |
 
 ## 12. What is the abstract?
 
-An abstract is a concise academic summary of the project's problem, objective, approach, main capabilities, and outcome. It differs from this technical documentation: the abstract gives a short, self-contained project summary, while this document explains how the application is designed and built. The course requires a two-page abstract in ACM format; the repository README identifies `docs/abstract.tex` and `docs/abstract.pdf` as its source and rendered copy. Before submission, replace author placeholders and ensure that the abstract's feature claims match the final app. Detailed implementation notes belong in this document.
+An abstract is a concise academic summary of the project's problem, objective, approach, main capabilities, and outcome. It differs from this technical documentation: the abstract gives a short, self-contained project summary, while this document explains how the application is designed and built. The course requires a two-page abstract in ACM format. The latest `main` branch does not currently contain the abstract source, rendered PDF, or ACM class file; add the required source and final PDF under `docs/` before submission. Keep feature claims consistent with the final app. Detailed implementation notes belong in this document.

@@ -54,7 +54,7 @@ The expanded PDF edition is available at `output/pdf/expense-tracker-documentati
 | Android UI concepts | Compose screens and dialogs; an XML progress meter embedded in Compose |
 | Intents | Explicit details navigation; implicit share and geo search intents |
 | Persistence | Room CRUD for expenses; DataStore for currency and budget |
-| ACM abstract | `docs/abstract.tex` and `docs/abstract.pdf` (replace author placeholders) |
+| ACM abstract | The course requires a two-page ACM abstract; add its source and PDF under `docs/` before submission. |
 
 ## Main source layout
 
