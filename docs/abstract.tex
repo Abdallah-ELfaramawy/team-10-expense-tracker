@@ -1,0 +1,51 @@
+\documentclass[sigconf,nonacm]{acmart}
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\pagestyle{plain}
+
+\begin{document}
+
+\title{Expense Tracker: An Offline-First Android Application for Personal Finance}
+
+\begin{abstract}
+Small everyday purchases are easy to forget, making it difficult for students and other users to understand where their money goes over a month. Expense Tracker is a native Android application that provides a simple, offline-first way to record expenses, organize them by category, and compare current-month spending with a personal budget. The application is implemented in Kotlin. Jetpack Compose provides the primary user interface, while a small XML-defined budget meter is hosted inside Compose to demonstrate interoperability with the traditional Android view system. Room stores expense records locally, and Preferences DataStore saves the selected display currency and monthly budget. The app also uses Android Intents to open expense details, share expense summaries, and request a nearby ATM search from a compatible maps application. This project demonstrates how declarative UI, local persistence, and inter-application communication can be combined in a compact personal-finance tool.
+\end{abstract}
+
+\keywords{Android, Kotlin, Jetpack Compose, XML, Room, DataStore, Intents, expense tracking}
+
+\maketitle
+
+\section{Introduction}
+Mobile devices make it practical to record a purchase close to the time it occurs, but a useful expense tracker must also make those records easy to review. Users may otherwise lose track of small purchases, overlook patterns across spending categories, or exceed a planned monthly limit without noticing. Many finance applications add account creation, online services, or features beyond what is needed for this basic workflow.
+
+Expense Tracker addresses this problem with a focused Android application that works with data stored on the device. Its primary workflow is to add an expense, review it later, correct or remove it, and use summaries to understand spending. The project also serves as an implementation of mobile-computing concepts: Compose-based UI, lifecycle-aware state, local relational persistence, key-value preferences, and communication between Android applications.
+
+\section{Application Features}
+Each expense includes a title, a positive amount, a category, a date, and an optional note. Users can create, view, edit, and delete expense records. The home screen displays total spending and a category summary; category filters let users focus the list on one type of expense. The supported categories are Food, Transport, Bills, Shopping, Health, and Other.
+
+The app includes a monthly budget setting. It compares the sum of expenses in the current calendar month with the saved budget and shows the amount spent, the remaining amount, or the amount by which spending exceeds the limit. A visual category breakdown uses horizontal bars scaled relative to the highest category total for that month.
+
+Users can select EGP, USD, EUR, or SAR as the display currency. The preference is remembered between launches. The selection changes formatting and the displayed currency label; the application does not perform exchange-rate conversion. From an expense details screen, users can share a short text description or request an ATM search from an installed maps application. The home screen can share a text summary of overall and category totals.
+
+\section{Architecture and Android Concepts}
+The application uses a small separation between UI, state, and data responsibilities. Activities host Compose content. A ViewModel exposes observable state and handles user actions, while Room and DataStore provide local persistence. This organization keeps UI rendering separate from storage operations and allows totals and lists to respond to changes in saved records.
+
+\paragraph{Jetpack Compose and XML interoperability.} Jetpack Compose is the primary UI toolkit. The home screen, details screen, dialogs, category filters, budget editor, and summary cards are composable functions. Lifecycle-aware collection connects StateFlow values from the ViewModel to the visible UI. The monthly budget meter is a focused interoperability example: its label and horizontal progress bar are defined in an XML layout and inflated with Compose's AndroidView. Compose supplies the current percentage and over-budget state, while the rest of the budget card and all surrounding screens remain Compose-based.
+
+\paragraph{Local persistence.} Room stores expense records in a local database. The expense entity contains an auto-generated identifier, title, amount, category, date in Unix milliseconds, and optional note. DAO queries expose all expenses ordered by date and an individual expense by identifier as Flows. An upsert operation supports both insertion and editing, and a delete operation removes a record. Because these queries are observable, writes are reflected in derived totals and lists without a separate refresh action.
+
+Preferences DataStore is used for small key-value settings rather than relational expense data. It stores the selected display currency and monthly budget. The app is designed to keep this information locally and does not require a network connection or account for its core features.
+
+\paragraph{Intents and navigation.} Selecting an expense launches the details activity with an explicit Intent that carries the expense identifier. Sharing uses the implicit \texttt{ACTION\_SEND} action with plain text. The ATM action uses an implicit \texttt{ACTION\_VIEW} Intent with a \texttt{geo:} query. Android can route these requests to compatible installed applications; the app reports when no handler is available.
+
+\paragraph{Kotlin implementation.} The data model uses a Kotlin data class and immutable properties where practical. Extension helpers handle date and currency formatting and safe Intent launches. Lambdas represent UI events, and StateFlow provides observable state from the ViewModel. These choices make common behavior explicit and keep the example compact enough to review in a course project.
+
+\section{Evaluation Approach and Scope}
+The essential workflows can be evaluated by adding, editing, filtering, sharing, and deleting expenses; checking the monthly budget after records change; and restarting the app to confirm that expenses and preferences persist. Intent behavior can be checked on a device or emulator with compatible sharing and maps applications installed. These workflows describe an evaluation approach and do not claim a formal usability study.
+
+The current prototype is intentionally scoped. It does not synchronize records between devices, authenticate users, attach receipt images, export CSV files, or convert between currencies. Its chart and budget comparison cover the current local calendar month. These boundaries keep the implementation centered on expense entry, local persistence, and understandable summaries.
+
+\section{Conclusion}
+Expense Tracker combines a Compose-first Android interface with Room, DataStore, and Android Intents to support an offline expense-tracking workflow. Its category summaries and monthly budget make saved records useful for reviewing spending, while the XML budget meter demonstrates how a traditional Android view can be embedded without replacing Compose as the UI core. The project provides a compact example of integrating platform UI, persistence, state, and inter-application communication in a native mobile application.
+
+\end{document}
