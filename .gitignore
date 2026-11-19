@@ -5,3 +5,11 @@ local.properties
 build/
 captures/
 .DS_Store
+
+# LaTeX build artifacts for the ACM abstract
+docs/*.aux
+docs/*.fdb_latexmk
+docs/*.fls
+docs/*.log
+docs/*.out
+docs/*.synctex.gz

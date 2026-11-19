@@ -44,8 +44,8 @@ On first build, Gradle may download the Gradle distribution and Android dependen
 - **XML interoperability:** `res/layout/view_budget_meter.xml` defines the budget progress meter. Compose embeds and updates it with `AndroidView`; the surrounding screen remains Compose.
 - **Intents:** An explicit intent opens the details screen. Implicit intents share text and open a map search for ATMs.
 
-See [the detailed project documentation](docs/PROJECT_DOCUMENTATION.md) for the package map, data flow, and implementation notes.
-The expanded PDF edition is available at `output/pdf/expense-tracker-documentation-v2.pdf`.
+See [the detailed project documentation](docs/PROJECT_DOCUMENTATION.md) for the package map, data flow, and implementation notes. The PDF edition is [available under `docs/`](docs/expense-tracker-documentation-v2.pdf).
+The anonymous two-page abstract is available as [PDF](docs/abstract.pdf) and [LaTeX source](docs/abstract.tex); its ACM class file is included at `docs/acmart.cls`.
 
 ## Course rubric references
 
@@ -54,7 +54,7 @@ The expanded PDF edition is available at `output/pdf/expense-tracker-documentati
 | Android UI concepts | Compose screens and dialogs; an XML progress meter embedded in Compose |
 | Intents | Explicit details navigation; implicit share and geo search intents |
 | Persistence | Room CRUD for expenses; DataStore for currency and budget |
-| ACM abstract | The course requires a two-page ACM abstract; add its source and PDF under `docs/` before submission. |
+| ACM abstract | Anonymous two-page abstract source and PDF are in `docs/`, with the ACM class file needed to rebuild it. |
 
 ## Main source layout
 
